@@ -4,6 +4,8 @@
 
       <router-link to="/home">首页</router-link>
       <router-link to="/news">新闻</router-link>
+      
+      <router-link to="/user">用户</router-link>
 
     </header>
 
@@ -39,7 +41,7 @@ export default {
     a{
       color:#fff;
 
-      padding:0 2rem
+      padding:0 2rem;
 
     }
   }

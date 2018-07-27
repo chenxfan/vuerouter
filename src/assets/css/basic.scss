@@ -29,3 +29,8 @@ strong {
     height: 0;
     clear: both;
 }
+ a:link{text-decoration:none; cursor:pointer; color:red;}
+ a:visited{text-decoration:overline; cursor:pointer}
+ a:active{text-decoration:overline; cursor:pointer}
+
+
