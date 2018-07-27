@@ -1,54 +1,69 @@
 <template>
-	<div id='news'>
-		<ul class="list">
-			 <li  v-for="item in list">
-			 	<router-link :to="'/content/'+item.aid">{{item.title}}</router-link>
-			 </li>
-		</ul>
-	</div>
+  <div id='news'>
+    ----{{this.$store.state.count}}
+    <button @click='incCount()'>触发vuex</button>
+    <ul class="list">
+      <li v-for="item in list">
+        <router-link :to="'/content/'+item.aid">{{item.title}}</router-link>
+      </li>
+    </ul>
+  </div>
 </template>
 <script>
-	export default{
-		data(){
-			return{
-				msg:'新闻页面',
-				list:[]
-			}
-		},methods:{
-			getData(){
-				var api='http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1';
-				this.$http.jsonp(api).then((response)=>{
-					console.log(response);
-					this.list=response.body.result;
-				},function(err){
-					console.log(err);
-				})
-			}
-		},mounted(){
-			this.getData();
-		}
-	}
+import store from '../vuex/store.js';
+export default {
+  data() {
+    return {
+      msg: '新闻页面',
+      list: []
+    }
+  },
+  methods: {
+    getData() {
+      var api = 'http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1';
+      this.$http.jsonp(api).then((response) => {
+        console.log(response);
+        this.list = response.body.result;
+        //数据放在store里面
+
+        this.$store.commit('addList', response.body.result);
+      }, function(err) {
+        console.log(err);
+      })
+    },
+    incCount() {
+      this.$store.commit('incCount');
+    }
+  },
+  mounted() {
+    var listData = this.$store.state.list;
+    if (listData.length > 0) {
+      this.list = listData;
+    } else {
+      this.getData();
+    }
+
+  },
+  store
+}
+
 </script>
 <style lang="scss" scoped>
-    
-    .list{
+.list {
 
-        li{
-            height:3.4rem;
+  li {
+    height: 3.4rem;
 
-            line-height:3.4rem;
+    line-height: 3.4rem;
 
-            boder-bottom:1px solid #eee;
+    boder-bottom: 1px solid #eee;
 
-            /*font-size:1.6rem;*/
+    /*font-size:1.6rem;*/
+    a {
 
-            a{
-
-                color:#666;
-
-                
-            }
-        }
+      color: #666;
     }
+  }
+}
 
 </style>
